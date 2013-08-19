@@ -1,0 +1,10 @@
+LICENSE
+MANIFEST
+META.yml
+Makefile.PL
+README
+lib/Git/Repository/Plugin/Status.pm
+lib/Git/Repository/Status.pm
+t/author-critic.t
+t/compile.t
+t/status.t
