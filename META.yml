@@ -18,4 +18,4 @@ resources:
   bugtracker: https://github.com/nichtich/Git-Repository-Plugin-Status/issues
   homepage: https://github.com/nichtich/Git-Repository-Plugin-Status
   repository: https://github.com/nichtich/Git-Repository-Plugin-Status.git
-version: 0.01
+version: 0.02

@@ -7,6 +7,11 @@ use Git::Repository;
 
 # clean up the environment
 delete @ENV{qw(GIT_DIR GIT_WORK_TREE)};
+$ENV{LC_ALL}              = 'C';
+$ENV{GIT_AUTHOR_NAME}     = 'Test Author';
+$ENV{GIT_AUTHOR_EMAIL}    = 'test.author@example.com';
+$ENV{GIT_COMMITTER_NAME}  = 'Test Committer';
+$ENV{GIT_COMMITTER_EMAIL} = 'test.committer@example.com';
 
 # first create a new empty repository
 my $r      = test_repository;
@@ -30,11 +35,14 @@ my @s = eval { $r->status };
 ok( scalar @s, 'status() method exists now' );
 
 ok($s[0]->index eq 'R' && $s[0]->work eq ' ', 'renamed');
+is $s[0]->status, 'R ';
 is $s[0]->path1, 'foo';
 is $s[0]->path2, 'bar';
 
 ok($s[1]->index eq 'A' && $s[1]->work eq ' ', 'added');
+is $s[1]->status, 'A ';
 is $s[1]->path1, 'file2';
+is $s[1]->path2, undef;
 
 
 # test options

@@ -1,6 +1,6 @@
 package Git::Repository::Plugin::Status;
 {
-  $Git::Repository::Plugin::Status::VERSION = '0.01';
+  $Git::Repository::Plugin::Status::VERSION = '0.02';
 }
 #ABSTRACT: Show the working tree status
 
@@ -47,13 +47,11 @@ sub status {
 		my $line1 = <$fh>;
 		NEXT: last unless defined $line1;
 
-#print STDERR "LINE1: $line1\n";
 		croak "error parsing output of `git @cmd`"
 		    unless $line1 =~ $FORMAT;
 		my @args = ($1,$2,$3);
 
 		my $line2 = <$fh>;
-#print STDERR "LINE2: $line2\n" if defined $line2;
 		if (defined $line2 && $line2 !~ $FORMAT) { # PATH2
 			chomp $line2;
 			push @files, Git::Repository::Status->new(
@@ -80,11 +78,25 @@ Git::Repository::Plugin::Status - Show the working tree status
 
 =head1 VERSION
 
-version 0.01
+version 0.02
 
 =head1 SYNOPSIS
 
-...
+    # load the Status plugin
+	use Git::Repository 'Status';
+ 
+	# get the status of all files
+	my @status = Git::Repository->status('--ignored');
+ 
+	# print all ignored files
+	for (@status) {
+	    say $_->path1 if $_->ignored;
+	}
+
+=head1 DESCRIPTION
+
+This module adds the C<status> method to L<Git::Repository> to get the status
+of a git working tree in form of L<Git::Repository::Status> objects.
 
 =encoding utf8
 
